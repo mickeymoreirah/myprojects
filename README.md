@@ -2,7 +2,7 @@
 # App de Ressuprimento
 
 ## Visão Geral
-Este projeto é um aplicativo web desenvolvido por em google apps script(para economizar tempo chamarei apenas de GApS a partir daqui) para facilitar a movimentação de produtos no estoque. Ele permite que colaboradores registrem o status das posições do estoque (como finalizado, vazio,parcial,etc..) enquanto atualiza uma planilha do sheets em tempo real. O objetivo é otimizar o processo de ressuprimento/armazenagem, garantindo que o setor de picking tenha acesso a informaçoes atualizadas para coletar produtos com eficiência,a escolha do appscript para criação é devido a não liberação do uso de python para quem não é da equipe t.i,oque exige tempo e alguma burocracia, entretanto o appscript mostrou-se formidável na execução desse e de outros projetos envolvendo planilhas.
+Este projeto é um aplicativo web desenvolvido por em google apps script(ou GAps) para facilitar a movimentação de produtos no estoque. Ele permite que colaboradores registrem o status das posições do estoque (como finalizado, vazio,parcial,etc..) enquanto atualiza uma planilha do sheets em tempo real. O objetivo é otimizar o processo de ressuprimento/armazenagem, garantindo que o setor de picking tenha acesso a informaçoes atualizadas para coletar produtos com eficiência,a escolha do appscript para criação é devido a não liberação do uso de python para quem não é da equipe t.i,oque exige tempo e alguma burocracia, entretanto o appscript mostrou-se formidável na execução desse e de outros projetos envolvendo planilhas.
 A idéia original veio após erros envolvendo falta de atualização de folhas,não preenchimento de posições/posições já validadas anteriormente entre outros.
 créditos e agradecimentos a minha supervisora flávia por me apoiar e fornecer idéias para os projetos quando encontro um bloqueio.
 
@@ -42,5 +42,5 @@ Para proteger dados sensíveis e garantir conformidade com a Lei Geral de Prote�
    - Clique nos botões de status para atualizar a planilha em tempo real.
 
 ## Licença
-Este projeto é fornecido como exemplo e pode e deve ser adaptado conforme necessário. Não inclui nenhuma licença específica, mas é bom sempre revisar as políticas de uso do GApS(como carinhosamente chamo o google apps script) e garantir conformidade com a LGPD para implementações reais.
+Este projeto é fornecido como exemplo e pode e deve ser adaptado conforme necessário. Não inclui nenhuma licença específica, mas é bom sempre revisar as políticas de uso do google apps script e garantir conformidade com a LGPD para implementações reais.
 
