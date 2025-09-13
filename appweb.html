@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+// O nome das colunas, bem como matrículas e nomes de colaboradores, foram alterados para proteger dados sensíveis 
+e garantir conformidade com a Lei Geral de Proteção de Dados (LGPD)
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body { font-family: Arial; margin: 20px; }
+      #form { margin-bottom: 20px; }
+      #lista { display: none; }
+      .item { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+      button { margin: 5px; padding: 8px; }
+      label { display: block; margin: 5px 0; }
+      input, select { padding: 5px; width: 200px; }
+    </style>
+  </head>
+  <body>
+    <h1>App de Ressuprimento</h1>
+    
+    <div id="form">
+      <label>Matrícula (ex: 5811XXXX):</label>
+      <input type="text" id="matricula" required placeholder="5811XXXX">
+      
+      <label>Ala (70 a 85):</label>
+      <select id="ala"></select>
+      
+      <label>Prioridade:</label>
+      <select id="prioridade">
+        <option value="0">Prioridade 0</option>
+        <option value="1">Prioridade 1</option>
+        <option value="2">Prioridade 2</option>
+      </select>
+      
+      <br><br>
+      <button onclick="carregarPosicoes()">Iniciar</button>
+    </div>
+    
+    <div id="lista"></div>
+
+    <script>
+      // Gera opções de ala (70 a 85) ao carregar a página
+      (function() {
+        var selectAla = document.getElementById('ala');
+        for (var i = 70; i <= 85; i++) {
+          var opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = i;
+          selectAla.appendChild(opt);
+        }
+      })();
+
+      function carregarPosicoes() {
+        var matricula = document.getElementById('matricula').value.trim();
+        var ala = document.getElementById('ala').value;
+        var prioridade = document.getElementById('prioridade').value;
+        
+        if (!matricula) {
+          alert('Informe a matrícula!');
+          return;
+        }
+        
+        document.getElementById('form').style.display = 'none';
+        document.getElementById('lista').style.display = 'block';
+        
+        atualizarLista(matricula, ala, prioridade);
+      }
+
+      function atualizarLista(matricula, ala, prioridade) {
+        google.script.run.withSuccessHandler(function(posicoes) {
+          console.log('Posições recebidas:', posicoes);
+          var divLista = document.getElementById('lista');
+          divLista.innerHTML = '';
+          
+          if (posicoes.length === 0) {
+            divLista.innerHTML = '<p>Nenhuma posição pendente para essa ala e prioridade! Volte ao formulário se quiser mudar.</p>';
+            var btnVoltar = document.createElement('button');
+            btnVoltar.textContent = 'Voltar';
+            btnVoltar.onclick = function() {
+              document.getElementById('form').style.display = 'block';
+              document.getElementById('lista').style.display = 'none';
+            };
+            divLista.appendChild(btnVoltar);
+            return;
+          }
+          
+          posicoes.forEach(function(pos, index) {
+            console.log('Processando posição ' + index + ':', pos);
+            var itemDiv = document.createElement('div');
+            itemDiv.className = 'item';
+            itemDiv.innerHTML = 
+              'Posição: ' + pos.posicao + '<br>' +
+              'ID do Produto: ' + pos.idProduto + '<br>' +
+              'Quantidade: ' + pos.quantidade + '<br>' +
+              'Linha: ' + pos.linha + '<br><br>';
+            
+            // Cria botões manualmente para evitar problemas de closure
+            var statuses = ['FINALIZADA', 'VAZIO', 'PARCIAL', 'NÃO ENCONTRADO'];
+            statuses.forEach(function(status) {
+              var btn = document.createElement('button');
+              btn.textContent = status;
+              btn.setAttribute('data-linha', pos.linha);
+              btn.onclick = function() {
+                var linha = this.getAttribute('data-linha');
+                var linhaInt = parseInt(linha);
+                console.log('Enviando linha: ' + linhaInt + ', status: ' + status + ', matrícula: ' + matricula);
+                google.script.run.atualizarStatus(linhaInt, status, matricula);
+                atualizarLista(matricula, ala, prioridade);
+              };
+              itemDiv.appendChild(btn);
+            });
+            
+            divLista.appendChild(itemDiv);
+          });
+        }).getPosicoesFiltradas(ala, prioridade);
+      }
+    </script>
+  </body>
+</html>
