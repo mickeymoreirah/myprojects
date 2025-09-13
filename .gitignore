@@ -1,30 +1,19 @@
-# Arquivos temporários de editores
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
-
-# Arquivos de sistema
 .DS_Store
 Thumbs.db
-
-# Arquivos de configuração sensíveis
-appsscript.json  # Configurações do Google Apps Script que podem conter IDs sensíveis
-*.json           # Outros arquivos JSON que podem conter credenciais
-*.key            # Chaves ou credenciais
-*.env            # Arquivos de variáveis de ambiente
-
-# Arquivos de log e backups
+appsscript.json  
+*.json          
+*.key           
+*.env           
 *.log
 *.bak
 *.backup
-
-# Arquivos de build ou cache
-node_modules/    # Caso use bibliotecas externas localmente
+node_modules/ 
 dist/
 build/
-
-# Dados sensíveis
-spreadsheet_id.txt  # Arquivos com IDs de planilhas
-*.csv               # Arquivos de dados exportados
-*.xlsx              # Arquivos de planilhas locais
+spreadsheet_id.txt  
+*.csv              
+*.xlsx              
